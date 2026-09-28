@@ -157,9 +157,10 @@ RETURN MAXX(TopRegion, Orders[Region])**
 Cap discounts on the loss-making sub-categories, or review their pricing.
 Investigate the worst-performing region and sub-category combinations shown in the Decomposition Tree.
 Track return rate against a target (e.g. 5%) and monitor it monthly.
+
 🖼 Dashboard Preview
 Overview	
-<img width="605" height="340" alt="image" src="https://github.com/user-attachments/assets/29f3157e-c5c6-4309-bca4-aefb37f494d6" />
+  <img width="605" height="340" alt="image" src="https://github.com/user-attachments/assets/29f3157e-c5c6-4309-bca4-aefb37f494d6" />
 
 Profitability
 <img width="608" height="347" alt="image" src="https://github.com/user-attachments/assets/437b9140-5381-4d36-acb6-18d8c0983bea" />
