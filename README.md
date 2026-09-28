@@ -46,7 +46,6 @@ People: regional managers
 Period: [add order date range, e.g. Jan 2014 – Dec 2017]
 🔄 Project Workflow
 1️⃣ Data Cleaning (Python)
-
 Notebook: notebooks/superstore_cleaning_eda.ipynb
 
 Step	What was checked / done	Why
@@ -58,18 +57,20 @@ Category consistency	Checked unique values of Ship Mode, Segment, Region, Catego
 Outliers	describe() + IQR check on Sales; investigated negative Profit	Negative profit is a real business loss (heavy discounting), so it was kept, not removed
 Merge	Left-joined Returns and People onto Orders; missing return match → "No"	An order absent from Returns was not returned
 Validate & save	assert checks, saved to data/cleaned/	Prove the data meets the rules
+
 2️⃣ Exploratory Data Analysis (Python)
 Univariate: Sales distribution (right-skewed), orders per category
 Bivariate: Profit by category (box plot), Discount vs Profit (scatter), Region vs return rate (crosstab)
 Correlation: heatmap of Sales, Quantity, Discount, Profit
 Time trend: monthly sales
+
 3️⃣ SQL Analysis (SQL Server)
 
 The cleaned data was loaded into SQL Server (Orders_data table) using SQLAlchemy + pyodbc, then analysed with SQL.
 
 Queries live in sql/analysis_queries.sql. Examples:
 
-sql
+**sql
 -- Profit and margin by category
 SELECT
     Category,
@@ -106,22 +107,22 @@ FROM Orders_data
 GROUP BY FORMAT(CAST([Order Date] AS DATE), 'yyyy-MM')
 ORDER BY order_month;
 
-Replace or extend these with the exact queries you ran.
+Replace or extend these with the exact queries you ran.**
 
 4️⃣ Power BI Dashboard
 
 A 5-page interactive report built on the cleaned data, with a dedicated Date table and DAX measures.
 
 Page	Purpose	Highlights
-📊 Executive Overview	Are we profitable and improving?	KPI cards, Sales vs last-year KPI, monthly trend with Anomaly Detection, Smart Narrative
-💰 Profitability Deep-Dive	Which products make or lose money, and why?	Profit by sub-category, Discount vs Profit scatter, Key Influencers on loss-making orders, best/worst category cards
-🌍 Regional & Category Performance	Where are we strong or weak?	Filled map (profit, red-to-green scale), Decomposition Tree with AI splits, best/worst region cards
-👥 Customer & Segment Insights	Who are our best customers?	Segment × Category profit matrix, Region × Segment sales matrix, Avg Order Value, top segment
-📦 Returns & Risk	What drives returns?	Return rate (by orders and by sales), profit lost to returns, Key Influencers on returns
+**📊 Executive Overview	Are we profitable and improving?**	KPI cards, Sales vs last-year KPI, monthly trend with Anomaly Detection, Smart Narrative
+**💰 Profitability Deep-Dive	Which products make or lose money, and why?**	Profit by sub-category, Discount vs Profit scatter, Key Influencers on loss-making orders, best/worst category cards
+**🌍 Regional & Category Performance	Where are we strong or weak?	**Filled map (profit, red-to-green scale), Decomposition Tree with AI splits, best/worst region cards
+**👥 Customer & Segment Insights	Who are our best customers?**	Segment × Category profit matrix, Region × Segment sales matrix, Avg Order Value, top segment
+**📦 Returns & Risk	What drives returns?**	Return rate (by orders and by sales), profit lost to returns, Key Influencers on returns
 
-Example DAX measures
+**Example DAX measures**
 
-dax
+**dax
 Profit Margin % = DIVIDE([Total Profit], [Total Sales], 0)
 
 Avg Order Value = DIVIDE([Total Sales], [Total Orders], 0)
@@ -138,7 +139,10 @@ CALCULATE(COUNTROWS(Orders), Orders[Profit] < 0)
 Best Region by Profit =
 VAR RegionProfit = SUMMARIZE(Orders, Orders[Region], "P", [Total Profit])
 VAR TopRegion = TOPN(1, RegionProfit, [P], DESC)
-RETURN MAXX(TopRegion, Orders[Region])
+RETURN MAXX(TopRegion, Orders[Region])**
+
+
+
 💡 Key Insights
 
 (Verify each number against your final dashboard before publishing, and delete anything you cannot support.)
